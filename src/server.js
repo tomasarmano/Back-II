@@ -8,6 +8,8 @@ import { connect } from 'mongoose';
 import path  from 'path';
 import {viewsRouter} from './routes/views.routes.js'
 import {sessionRouter} from './routes/session.routes.js'
+import passport from 'passport';
+import { initializePassport } from "./config/passport.config.js";
 
 const app = express()
 const PORT = 5000
@@ -15,7 +17,7 @@ const SECRET = 'secretKey'
 
 const mongoUser='tomasarmano'
 const mongoPasswword='mcyc7h3VAzt2ral9'
-const mongoUrl=`mongodb+srv://${mongoUser}:${mongoPasswword}@back.o8xfj.mongodb.net/?retryWrites=true&w=majority&appName=Back`
+const mongoUrl=`mongodb+srv://${mongoUser}:${mongoPasswword}@back.o8xfj.mongodb.net/test?retryWrites=true&w=majority&appName=Back`
 
 
 app.use(express.json())
@@ -26,14 +28,17 @@ app.use(session({
     secret:SECRET,
     store: MongoStore.create({
       mongoUrl,
-      ttl: 5,
     }),
     resave:false,
     saveUninitialized:false
 }))
-  
+ 
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
 connect(mongoUrl)
-.then(()=>console.log('Concetado a mongoDB'))
+.then(()=>console.log('Conectado a mongoDB'))
 .catch((err)=>console.log(err))
 
 app.engine(
