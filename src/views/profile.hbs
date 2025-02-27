@@ -3,14 +3,21 @@
 
   {{#if user}}
     Bienvenido
-    {{user.name}}
     <ul>
+      {{#if user.first_name}}
+        <li> Nombre: {{user.first_name}} </li>
+      {{/if}}
+
+      {{#if user.last_name}}
+        <li> Apellido: {{user.last_name}} </li>
+      {{/if}}
+
       {{#if user.age}}
-        <li> {{user.age}} </li>
+        <li> Edad: {{user.age}} </li>
       {{/if}}
 
       {{#if user.email}}
-        <li> {{user.email}} </li>
+        <li> Email: {{user.email}} </li>
       {{/if}}
 
        {{#if user.location}}

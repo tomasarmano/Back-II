@@ -14,6 +14,8 @@ import { initializePassport } from "./config/passport.config.js";
 const app = express()
 const PORT = 5000
 const SECRET = 'secretKey'
+const COOKIE_SECRET='mi_cookie_secreta'
+
 
 const mongoUser='tomasarmano'
 const mongoPasswword='mcyc7h3VAzt2ral9'
@@ -22,7 +24,9 @@ const mongoUrl=`mongodb+srv://${mongoUser}:${mongoPasswword}@back.o8xfj.mongodb.
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(cookieParser())
+app.use(cookieParser(COOKIE_SECRET))
+app.use(express.static(path.join(__dirname, "public")));
+
 
 app.use(session({
     secret:SECRET,
