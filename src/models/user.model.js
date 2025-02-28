@@ -1,11 +1,11 @@
 import { Schema, model } from "mongoose";
 
 const userSchema = new Schema({
-  first_name: { type: String, required: true }, 
-  last_name: { type: String, required: true }, 
-  age: { type: String, required: true }, 
+  first_name: { type: String, required: function() { return !this.githubId; } },
+  last_name: { type: String, required: function() { return !this.githubId; } },
+  age: { type: Number, required: function() { return !this.githubId; } },
+  password: { type: String, required: function() { return !this.githubId; } },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
   role: { type: String, default: "user" },
   userName:{type:String},
   githubId: { type: String },

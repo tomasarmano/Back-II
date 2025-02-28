@@ -1,8 +1,8 @@
-<div class="alert alert-dark p-4">
+<div class="alert alert-dark p-4 text-black">
   <h1>Bienvenido a la aplicación de ejemplo</h1>
 
   {{#if user}}
-    Bienvenido
+    Bienvenido {{user.role}}
     <ul>
       {{#if user.first_name}}
         <li> Nombre: {{user.first_name}} </li>
@@ -41,9 +41,9 @@
       <a href="/login" class="btn btn-primary"> Loguearse </a>
   {{/if}}
   <div>
-    <a href="/logout" class="btn btn-primary">Cerrar Sesion</a>
+    <a href="/logout" class="btn btn-danger btn-sm">Cerrar Sesion</a>
   </div>
   <div>
-    <a href="/" class="btn btn-success">Inicio</a>
+    <a href="/" class="btn btn-info btn-sm mt-2">Inicio</a>
   </div>
 </div>

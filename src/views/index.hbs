@@ -1,26 +1,26 @@
-<div class="m-2 rounded-4 bg-light p-3">
-  <div class="alert alert-primary">
+<div class="m-2 rounded-4 bg-dark p-3">
+  <div class="alert alert-dark text-black">
     <h1> ¡Bienvenido!</h1>
   </div>
 
   {{#if isSession}}
     <div>
-      <a href="/profile" class="btn btn-primary">
+      <a href="/profile" class="btn btn-info">
         <i class="bi bi-box-arrow-in-right"></i>
         Perfil
       </a>
     </div>
   {{else}}
     <div>
-      <a href="/login" class="btn btn-primary">
+      <a href="/login" class="btn btn-info">
         <i class="bi bi-box-arrow-in-right"></i>
         Iniciar Sesión
       </a>
       <a href="/register" class="btn btn-success">
-
         <i class="bi bi-pencil-square"></i>
         Registrarse
       </a>
     </div>
   {{/if}}
 </div>
+

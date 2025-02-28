@@ -95,42 +95,36 @@ export function initializePassport() {
     )
   );
 
-  passport.use("github", new GithubStrategy(
-    {
-      clientID:CLIENT_ID,
-      clientSecret: CLIENT_SECRET_GH,
-      callbackURL: "http://localhost:5000/api/sessions/githubcallback",
-    },
-    async (access_token, refresh_token, profile, done) => {
-      try {
-        console.log(profile);
-        const email = profile.email || "tomi@gmail.com";
-        let user = await userModel.findOne({
-          email
-        });
+  passport.use("github", new GithubStrategy({
+    clientID:CLIENT_ID,
+    clientSecret: CLIENT_SECRET_GH,
+    callbackURL: "http://localhost:5000/api/sessions/githubcallback",
+  }, async (accessToken, refreshToken, profile, done) => {
+    try {
+      const email = profile.email || "tomi@gmail.com";
 
-        if (user) {
-          return done(null, user);
-        }
-
-        const newUser = await userModel.create({
-          name: profile.displayName,
-          email,
-          userName:profile.username,
-          githubId: profile.id,
-          url:profile._json.html_url,
-          instagram:profile._json.blog,
-          company:profile._json.company
-        });
-
-        return done(null, newUser); // 👈 Crea un nuevo usuario y finaliza el proceso
-
-
-      } catch (error) {
-        return done(error);
+      let user = await userModel.findOne({ email });
+  
+      if (user) {
+        return done(null, user);
       }
-
-    }))
+      
+      const newUser = await userModel.create({
+        first_name: profile.displayName,
+        email,
+        userName:profile.username,
+        githubId: profile.id,
+        url:profile.profileUrl,
+        location: profile._json.location,
+        instagram:profile._json.blog,
+        company:profile._json.company
+      });
+      
+      return done(null, newUser); 
+    } catch (error) {
+      return done(error);
+    }
+  }));
 
     passport.serializeUser((user, done) => {
         done(null, user._id);
@@ -144,4 +138,5 @@ export function initializePassport() {
             return done(`Hubo un error: ${error.message}`);
         }
     });
+
 }
