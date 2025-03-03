@@ -6,13 +6,17 @@ const userSchema = new Schema({
   age: { type: Number, required: function() { return !this.githubId; } },
   password: { type: String, required: function() { return !this.githubId; } },
   email: { type: String, required: true, unique: true },
-  role: { type: String, default: "user" },
+  role: { type: String, required:true, enum:["admin", "user"], default: "user" },
   userName:{type:String},
   githubId: { type: String },
   url:{type:String},
   location:{type:String},
-  instagram:{type:String},
-  company:{type:String}
+  company:{type:String},
+  cart: [{
+    productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true }, 
+    quantity: { type: Number, default: 1 }, 
+    addedAt: { type: Date, default: Date.now } 
+  }]
 });
 
 export const userModel = model("user", userSchema);

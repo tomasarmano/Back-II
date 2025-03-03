@@ -51,7 +51,7 @@ viewsRouter.get("/current", authenticate, (req, res) => {
 
 
 viewsRouter.get("/logout", (req,res)=>{
-  req.session.destroy()
+  req.session.destroy();
   res.clearCookie("currentUser");
-  res.redirect("/")
+  res.redirect("/");
 })
